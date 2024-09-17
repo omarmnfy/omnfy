@@ -6,9 +6,9 @@ website:
   title: "Omar Mnfy"
   navbar:
     left:
-      - href: index.qmd
+      - href: index.html
         text: Home
-      - about.qmd
+      - about.html
 
 format:
   html:
