@@ -1,5 +1,5 @@
 ---
-title: "omarmnfy"
+title: "omnfy"
 ---
 
 This is a Quarto website.
