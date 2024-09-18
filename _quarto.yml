@@ -13,14 +13,15 @@ website:
       - href: dataviz.qmd
         text: Data Viz
 
-format:
-  html:
-    theme: cosmo
-    css: styles.css
+output: 
+  html_document:
     toc: true
+    toc_depth: 2
+    theme: flatly
+    highlight: tango
     self_contained: false
     includes:
-      in_header: "favicon.html"
+      before_body: "favicon.rhtml"
       
 editor: visual
 
