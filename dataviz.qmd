@@ -1,0 +1,3 @@
+## Welcome
+
+Welcome to my personal website! I am Omar Mnfy, a sophomore at Pitzer College studying Computer Science and Data Science. I am a data science enthusiast with experience in R, Python, and machine learning

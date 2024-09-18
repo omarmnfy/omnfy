@@ -18,6 +18,9 @@ format:
     theme: cosmo
     css: styles.css
     toc: true
-
+    self_contained: false
+    includes:
+      in_header: "favicon.html"
+      
 editor: visual
 
