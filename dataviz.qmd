@@ -2,7 +2,7 @@
 title: "Data Viz"
 ---
 
-## TidyTuesday Analysis 1: Chess Game Dataset (Lichess)
+## 📊 TidyTuesday Analysis 1: Chess Game Dataset (Lichess)
 
 [**TidyTuesday Data Source**](https://github.com/rfordatascience/tidytuesday/tree/master/data/2024/2024-10-01)
 
@@ -34,3 +34,46 @@ ggplot(chess_clean, aes(x = average_rating, y = turns)) +
   ) +
   theme_minimal()
 ```
+
+![](images/clipboard-71016751.png){fig-align="center"}
+
+------------------------------------------------------------------------
+
+### 📊 TidyTuesday Analysis 2: Super Bowl Commercials Dataset
+
+#### [**TidyTuesday Data Source**](https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-03-02)
+
+#### Code for Data Processing and Visualization
+
+This visualization will focus on analyzing **the relationship between Super Bowl commercial view counts and the presence of celebrities in the ad**. This code generate a boxplot that shows whether ads featuring celebrities get more views.
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+library(ggplot2)
+
+# Load the Super Bowl dataset
+tuesdata <- tidytuesdayR::tt_load('2021-03-02')
+youtube <- tuesdata$youtube
+
+# Data Cleaning
+youtube_clean <- youtube %>%
+  filter(!is.na(view_count)) %>%
+  mutate(celebrity_presence = ifelse(celebrity == TRUE, "Celebrity", "No Celebrity"))
+
+# Visualization: Boxplot of View Count based on Celebrity Presence
+ggplot(youtube_clean, aes(x = celebrity_presence, y = view_count, fill = celebrity_presence)) +
+  geom_boxplot() +
+  scale_y_log10() +  # Log scale for better visualization
+  labs(
+    title = "Super Bowl Ad View Count by Celebrity Presence",
+    x = "Celebrity Presence in Ad",
+    y = "View Count (Log Scale)",
+    caption = "Source: Superbowl Commercials dataset via TidyTuesday, 2021-03-02"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+```
+
+![](images/clipboard-1785774678.png)

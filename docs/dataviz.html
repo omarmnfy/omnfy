@@ -168,7 +168,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <section id="tidytuesday-analysis-1-chess-game-dataset-lichess" class="level2">
-<h2 class="anchored" data-anchor-id="tidytuesday-analysis-1-chess-game-dataset-lichess">TidyTuesday Analysis 1: Chess Game Dataset (Lichess)</h2>
+<h2 class="anchored" data-anchor-id="tidytuesday-analysis-1-chess-game-dataset-lichess">📊 TidyTuesday Analysis 1: Chess Game Dataset (Lichess)</h2>
 <p><a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2024/2024-10-01"><strong>TidyTuesday Data Source</strong></a></p>
 <section id="code-for-data-processing-and-visualization" class="level4">
 <h4 class="anchored" data-anchor-id="code-for-data-processing-and-visualization">Code for Data Processing and Visualization</h4>
@@ -225,8 +225,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/clipboard-71016751.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<hr>
+</section>
+<section id="tidytuesday-analysis-2-super-bowl-commercials-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="tidytuesday-analysis-2-super-bowl-commercials-dataset">📊 TidyTuesday Analysis 2: Super Bowl Commercials Dataset</h3>
+<section id="tidytuesday-data-source" class="level4">
+<h4 class="anchored" data-anchor-id="tidytuesday-data-source"><a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-03-02"><strong>TidyTuesday Data Source</strong></a></h4>
+</section>
+<section id="code-for-data-processing-and-visualization-1" class="level4">
+<h4 class="anchored" data-anchor-id="code-for-data-processing-and-visualization-1">Code for Data Processing and Visualization</h4>
+<p>This visualization will focus on analyzing <strong>the relationship between Super Bowl commercial view counts and the presence of celebrities in the ad</strong>. This code generate a boxplot that shows whether ads featuring celebrities get more views.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the Super Bowl dataset</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>tuesdata <span class="ot">&lt;-</span> tidytuesdayR<span class="sc">::</span><span class="fu">tt_load</span>(<span class="st">'2021-03-02'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>---- Compiling #TidyTuesday Information for 2021-03-02 ----
+--- There is 1 file available ---
 
 
+── Downloading files ───────────────────────────────────────────────────────────
+
+  1 of 1: "youtube.csv"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>youtube <span class="ot">&lt;-</span> tuesdata<span class="sc">$</span>youtube</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Data Cleaning</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>youtube_clean <span class="ot">&lt;-</span> youtube <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(view_count)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">celebrity_presence =</span> <span class="fu">ifelse</span>(celebrity <span class="sc">==</span> <span class="cn">TRUE</span>, <span class="st">"Celebrity"</span>, <span class="st">"No Celebrity"</span>))</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization: Boxplot of View Count based on Celebrity Presence</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(youtube_clean, <span class="fu">aes</span>(<span class="at">x =</span> celebrity_presence, <span class="at">y =</span> view_count, <span class="at">fill =</span> celebrity_presence)) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span>  <span class="co"># Log scale for better visualization</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Super Bowl Ad View Count by Celebrity Presence"</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Celebrity Presence in Ad"</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"View Count (Log Scale)"</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: Superbowl Commercials dataset via TidyTuesday, 2021-03-02"</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="dataviz_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><img src="images/clipboard-1785774678.png" class="img-fluid"></p>
+
+
+</section>
 </section>
 </section>
 
