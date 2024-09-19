@@ -2,19 +2,19 @@
 title: "Omar Mnfy"
 ---
 
-## 👋🏽 Welcome
+## Welcome
 
 Welcome to my personal website! I am Omar Mnfy, a sophomore at Pitzer College studying Computer Science and Data Science. I am a data science enthusiast with experience in R, Python, and machine learning.
 
 ![](images/my_picture.jpg){fig-align="center" width="362"}
 
-## 📬 Contact
+## Contact
 
 -   **Email**: omarmnfy \[at\] gmail \[dot\] com
 -   **Location**: Claremont, CA
 
 [<img src="images/github-icon.png" alt="GitHub" style="width:30px;height:30px;"/>](https://github.com/omarmnfy) [<img src="images/linkedin-icon.png" alt="LinkedIn" style="width:30px;height:30px;"/>](https://www.linkedin.com/in/omarmnfy/)
 
-## 🌐 Personal Website GitHub Repository
+## Personal Website GitHub Repository
 
 If you are interested to see my personal website GitHub's repository, please click on "[Website GitHub Repository](https://github.com/omarmnfy/omnfy)".

@@ -2,13 +2,13 @@
 title: "About"
 ---
 
-## 🇪🇬 About Me
+## About Me
 
 I'm Omar Mnfy, an Egyptian student passionate **Computer Science and Data Science** student at **Pitzer College**. With a strong foundation in both fields, I'm always seeking opportunities to blend my technical expertise with real-world applications. Over the past few years, I’ve taken on a variety of roles that have allowed me to dive deep into the world of technology and problem-solving.
 
 ![](images/Omar+Mnfy+Contact.png){fig-align="center" width="655"}
 
-### 👨🏽‍💻 Technical Skills
+### Technical Skills
 
 My technical toolkit spans across multiple domains:
 
@@ -18,7 +18,7 @@ My technical toolkit spans across multiple domains:
 
 -   **Libraries**: Pandas, NumPy, TensorFlow, Scikit-learn, OpenCV, YOLO, Simulink
 
-### 💼 Work Experience
+### Work Experience
 
 I currently serve as a **Machine Learning Developer** at **P-ai (Pomona AI)** in Claremont, where I apply my skills in AI and data science to real-world challenges. Additionally, I work as an **AI Developer** at **Outlier**, a freelance role where I focus on building AI solutions for diverse clients.
 
@@ -30,6 +30,6 @@ In the past, I have held roles such as:
 
 -   **Data Engineering Intern** at **WholeRen**, where I developed data pipelines and infrastructure solutions.
 
-### 💻 Research and Internships
+### Research and Internships
 
 My academic journey has also been marked by a commitment to research, particularly at **Sheung Lab**, where I focus on innovative projects at the intersection of data science and engineering. I'm constantly pushing the boundaries of what AI and machine learning can do, with a keen interest in natural language processing, computer vision, and ethical AI practices.

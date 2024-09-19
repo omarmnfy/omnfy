@@ -2,7 +2,7 @@
 title: "Data Viz"
 ---
 
-## 📊 TidyTuesday Analysis 1: Chess Game Dataset (Lichess)
+## TidyTuesday Analysis 1: Chess Game Dataset (Lichess)
 
 [**TidyTuesday Data Source**](https://github.com/rfordatascience/tidytuesday/tree/master/data/2024/2024-10-01)
 
@@ -39,7 +39,7 @@ ggplot(chess_clean, aes(x = average_rating, y = turns)) +
 
 ------------------------------------------------------------------------
 
-### 📊 TidyTuesday Analysis 2: Super Bowl Commercials Dataset
+## TidyTuesday Analysis 2: Super Bowl Commercials Dataset
 
 #### [**TidyTuesday Data Source**](https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-03-02)
 
