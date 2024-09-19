@@ -4,7 +4,7 @@
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "I’m Omar Mnfy, an Egyptian student passionate Computer Science and Data Science student at Pitzer College. With a strong foundation in both fields, I’m always seeking opportunities to blend my technical expertise with real-world applications. Over the past few years, I’ve taken on a variety of roles that have allowed me to dive deep into the world of technology and problem-solving.\n\n\n\n\n\n\n\nMy technical toolkit spans across multiple domains:\n\nProgramming Languages: Python, MATLAB, JavaScript, C, C++, HTML, CSS, R, SQL\nFrameworks: React, Node.js, Bootstrap, WordPress, Flask\nLibraries: Pandas, NumPy, TensorFlow, Scikit-learn, OpenCV, YOLO, Simulink\n\n\n\n\nI currently serve as a Machine Learning Developer at P-ai (Pomona AI) in Claremont, where I apply my skills in AI and data science to real-world challenges. Additionally, I work as an AI Developer at Outlier, a freelance role where I focus on building AI solutions for diverse clients.\nIn the past, I have held roles such as:\n\nProduct Manager at the Randall Lewis Center for Innovation & Entrepreneurship at Claremont McKenna College, where I led projects that bridged technology and innovation.\nData Analyst at the W.M. Keck Science Department, leveraging data to support research and academic initiatives.\nData Engineering Intern at WholeRen, where I developed data pipelines and infrastructure solutions.\n\n\n\n\nMy academic journey has also been marked by a commitment to research, particularly at Sheung Lab, where I focus on innovative projects at the intersection of data science and engineering. I’m constantly pushing the boundaries of what AI and machine learning can do, with a keen interest in natural language processing, computer vision, and ethical AI practices."
   },
   {
     "objectID": "index.html",
@@ -38,14 +38,21 @@
     "objectID": "index.html#contact",
     "href": "index.html#contact",
     "title": "Omar Mnfy",
-    "section": "Contact",
-    "text": "Contact\n\nEmail: omarmnfy [at] gmail [dot] com\nLocation: Claremont, CA"
+    "section": "📬 Contact",
+    "text": "📬 Contact\n\nEmail: omarmnfy [at] gmail [dot] com\nLocation: Claremont, CA"
   },
   {
     "objectID": "index.html#personal-website-github-repository",
     "href": "index.html#personal-website-github-repository",
     "title": "Omar Mnfy",
-    "section": "Personal Website GitHub Repository",
-    "text": "Personal Website GitHub Repository\nIf you are interested to see my personal website GitHub’s repository, please click on “Website GitHub Repository”."
+    "section": "🌐 Personal Website GitHub Repository",
+    "text": "🌐 Personal Website GitHub Repository\nIf you are interested to see my personal website GitHub’s repository, please click on “Website GitHub Repository”."
+  },
+  {
+    "objectID": "about.html#about-me",
+    "href": "about.html#about-me",
+    "title": "About",
+    "section": "",
+    "text": "I’m Omar Mnfy, an Egyptian student passionate Computer Science and Data Science student at Pitzer College. With a strong foundation in both fields, I’m always seeking opportunities to blend my technical expertise with real-world applications. Over the past few years, I’ve taken on a variety of roles that have allowed me to dive deep into the world of technology and problem-solving.\n\n\n\n\n\n\n\nMy technical toolkit spans across multiple domains:\n\nProgramming Languages: Python, MATLAB, JavaScript, C, C++, HTML, CSS, R, SQL\nFrameworks: React, Node.js, Bootstrap, WordPress, Flask\nLibraries: Pandas, NumPy, TensorFlow, Scikit-learn, OpenCV, YOLO, Simulink\n\n\n\n\nI currently serve as a Machine Learning Developer at P-ai (Pomona AI) in Claremont, where I apply my skills in AI and data science to real-world challenges. Additionally, I work as an AI Developer at Outlier, a freelance role where I focus on building AI solutions for diverse clients.\nIn the past, I have held roles such as:\n\nProduct Manager at the Randall Lewis Center for Innovation & Entrepreneurship at Claremont McKenna College, where I led projects that bridged technology and innovation.\nData Analyst at the W.M. Keck Science Department, leveraging data to support research and academic initiatives.\nData Engineering Intern at WholeRen, where I developed data pipelines and infrastructure solutions.\n\n\n\n\nMy academic journey has also been marked by a commitment to research, particularly at Sheung Lab, where I focus on innovative projects at the intersection of data science and engineering. I’m constantly pushing the boundaries of what AI and machine learning can do, with a keen interest in natural language processing, computer vision, and ethical AI practices."
   }
 ]
