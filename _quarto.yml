@@ -12,6 +12,8 @@ website:
         text: About
       - href: dataviz.qmd
         text: Data Viz
+      - href: mini-project-2.qmd
+        text: Mini-Project 2        
 
 output: 
   html_document:

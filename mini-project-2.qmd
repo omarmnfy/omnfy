@@ -1,0 +1,159 @@
+---
+title: "Mini Project 2"
+---
+
+# Text Analysis of NY Times Headlines
+
+### Data Resource: **RTextTools** Package in R
+
+## Step 1: Load the Dataset & Converting it to a Tibble for Easier Manipulation
+
+```{r loading-dataset}
+# Load the package
+library(RTextTools)
+
+# Load the NYTimes dataset
+data(NYTimes)
+
+# Load the tibble package
+library(tibble)
+
+# Convert the NYTimes dataset to a tibble
+nytimes_data <- as_tibble(NYTimes)
+
+# Check the structure of the dataset
+str(nytimes_data)
+```
+
+## Step 2: Exploring the Dataset
+
+```{r exploring-dataset}
+# View the first few rows of the dataset
+head(nytimes_data)
+
+# Check the structure of the dataset
+str(nytimes_data)
+
+# Get a summary of the dataset
+summary(nytimes_data)
+```
+
+## Step 3: Analysis Using String Functions
+
+```{r}
+library(stringr)
+
+# 1. Count the number of headlines that contain the word "politics"
+politics_count <- sum(str_detect(nytimes_data$Title, "politics"), na.rm = TRUE)
+cat("Number of headlines containing 'politics':", politics_count)
+
+# 2. Remove punctuation from headlines
+nytimes_data$clean_headlines <- str_replace_all(nytimes_data$Title, "[[:punct:]]", "")
+head(nytimes_data$clean_headlines)
+
+# 3. Extract the first word of each headline
+nytimes_data$first_word <- str_extract(nytimes_data$Title, "\\b\\w+\\b")
+head(nytimes_data$first_word)
+```
+
+## Step 4: Regular Expressions
+
+```{r}
+library(stringr)
+
+# 1. Count the number of headlines that contain numbers
+nytimes_data$has_numbers <- str_detect(nytimes_data$Title, "\\d+")
+num_with_numbers <- sum(nytimes_data$has_numbers, na.rm = TRUE)
+cat("Number of headlines containing numbers:", num_with_numbers, "\n")
+
+# 2. Check for broader keywords like "Race" or "Budget"
+nytimes_data$contains_race <- str_detect(nytimes_data$Title, "Race")
+nytimes_data$contains_budget <- str_detect(nytimes_data$Title, "Budget")
+
+# Summarize counts
+num_with_race <- sum(nytimes_data$contains_race, na.rm = TRUE)
+num_with_budget <- sum(nytimes_data$contains_budget, na.rm = TRUE)
+cat("Number of headlines containing 'Race':", num_with_race, "\n")
+cat("Number of headlines containing 'Budget':", num_with_budget, "\n")
+
+# 3. Search for any mention of years from 1990 to 2020
+nytimes_data$contains_year <- str_detect(nytimes_data$Title, "19[0-9]{2}|20[0-2][0-9]")
+num_with_year <- sum(nytimes_data$contains_year, na.rm = TRUE)
+cat("Number of headlines containing years from 1990-2020:", num_with_year, "\n")
+```
+
+### Step 5: Visualization
+
+**(a) Bar Plot of Word Frequency**:
+
+```{r}
+library(ggplot2)
+
+# Create a data frame for the keyword counts
+keyword_data <- data.frame(
+  Keyword = c("Numbers", "Race", "Budget", "Year (1990-2020)"),
+  Count = c(num_with_numbers, num_with_race, num_with_budget, num_with_year)
+)
+
+# Create a bar plot
+ggplot(keyword_data, aes(x = Keyword, y = Count, fill = Keyword)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Keyword Frequency in NY Times Headlines",
+       x = "Keyword", y = "Number of Headlines") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+**Plot Description: Plot (a) highlights the prominence of numbers and certain keywords in the headlines.**
+
+**(b) Pie Chart of Headlines Containing Numbers:**
+
+```{r}
+# Create a data frame for the pie chart
+number_data <- data.frame(
+  Category = c("Contains Numbers", "Doesn't Contain Numbers"),
+  Count = c(num_with_numbers, nrow(nytimes_data) - num_with_numbers)
+)
+
+# Create the pie chart
+ggplot(number_data, aes(x = "", y = Count, fill = Category)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y") +
+  labs(title = "Proportion of Headlines Containing Numbers") +
+  theme_void() +
+  theme(legend.title = element_blank())
+
+```
+
+**Plot Description: Plot (b) highlights the prominence of numbers and certain keywords in the headlines.**
+
+**(c) Line Plot of Year Mentions (1990-2005)**
+
+```{r}
+# Extract the mentioned years from headlines (1990-2005
+nytimes_data$mentioned_year <- str_extract(nytimes_data$Title, "19[0-9]{2}|20[0-2][0-9]")
+
+# Convert the mentioned_year column to a factor for plotting
+nytimes_data$mentioned_year <- factor(nytimes_data$mentioned_year, levels = as.character(1990:2005))
+
+# Filter out any missing or irrelevant years outside the range (1990-2005)
+filtered_year_data <- nytimes_data[!is.na(nytimes_data$mentioned_year), ]
+
+# Count the number of mentions of each year
+year_count <- table(filtered_year_data$mentioned_year)
+
+# Convert the table to a data frame for plotting
+year_count_df <- as.data.frame(year_count)
+colnames(year_count_df) <- c("Year", "Count")
+
+# Create a line plot showing year mentions over time (1990-2005)
+ggplot(year_count_df, aes(x = Year, y = Count)) +
+  geom_line(group = 1, color = "blue", size = 1) +
+  geom_point(color = "red", size = 2) +
+  labs(title = "Mentions of Years in NY Times Headlines (1990-2005)",
+       x = "Year", y = "Number of Mentions") +
+  theme_minimal()
+
+```
+
+**Plot Description: Plot (c) provides a historical view of how frequently different years were mentioned in headlines.**

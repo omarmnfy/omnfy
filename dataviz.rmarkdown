@@ -1,0 +1,39 @@
+---
+title: "Data Viz"
+---
+
+
+## TidyTuesday Analysis 1: Chess Game Dataset (Lichess)
+
+[**TidyTuesday Data Source**](https://github.com/rfordatascience/tidytuesday/tree/master/data/2024/2024-10-01)
+
+#### Code for Data Processing and Visualization
+
+This section will load the data and create a scatter plot that compares the **number of turns** to **player ranking**. It will help explore how the duration of chess games varies based on the players' ratings.
+
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+library(ggplot2)
+
+# Load the chess dataset using tidytuesdayR
+tuesdata <- tidytuesdayR::tt_load('2024-10-01')
+chess <- tuesdata$chess
+
+# Data Cleaning
+chess_clean <- chess %>%
+  mutate(average_rating = (white_rating + black_rating) / 2)
+
+# Visualization: Scatter Plot of Game Turns vs Average Rating
+ggplot(chess_clean, aes(x = average_rating, y = turns)) +
+  geom_point(alpha = 0.5, color = "blue") +
+  labs(
+    title = "Scatter Plot of Chess Game Turns vs Average Player Rating",
+    x = "Average Player Rating",
+    y = "Number of Turns",
+    caption = "Source: Lichess dataset via TidyTuesday, 2024-10-01"
+  ) +
+  theme_minimal()
+```
+
