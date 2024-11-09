@@ -38,6 +38,7 @@ library(dplyr)
 library(purrr)
 library(ggplot2)
 library(readr)
+suppressPackageStartupMessages(library(dplyr))
 
 
 
@@ -102,7 +103,7 @@ We can now plot the probabilities of each outcome as a function of the rating di
 ```{r}
 # Plot the results
 ggplot(simulation_results, aes(x = rating_diff, y = probability, color = outcome)) +
-  geom_line(size = 1.2) +
+  geom_line(linewidth = 1.2) +
   labs(
     title = "Probability of Chess Game Outcomes Based on Rating Difference",
     x = "Rating Difference (White - Black)",

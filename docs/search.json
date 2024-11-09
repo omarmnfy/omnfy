@@ -158,7 +158,7 @@
     "href": "iteration-project-3.html#step-1-load-and-filter-the-dataset",
     "title": "Iteration Project 3",
     "section": "Step 1: Load and Filter the Dataset",
-    "text": "Step 1: Load and Filter the Dataset\n\n# Load libraries\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\nlibrary(purrr)\nlibrary(ggplot2)\nlibrary(readr)\n\n\n\n# Read data directly from GitHub\nchess &lt;- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-10-01/chess.csv', show_col_types = FALSE)\n\n# Filter the data for games with both player ratings and results\nchess_filtered &lt;- chess %&gt;%\n  filter(!is.na(white_rating) & !is.na(black_rating) & !is.na(winner)) %&gt;%\n  mutate(rating_diff = white_rating - black_rating)"
+    "text": "Step 1: Load and Filter the Dataset\n\n# Load libraries\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\nlibrary(purrr)\nlibrary(ggplot2)\nlibrary(readr)\nsuppressPackageStartupMessages(library(dplyr))\n\n\n\n# Read data directly from GitHub\nchess &lt;- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-10-01/chess.csv', show_col_types = FALSE)\n\n# Filter the data for games with both player ratings and results\nchess_filtered &lt;- chess %&gt;%\n  filter(!is.na(white_rating) & !is.na(black_rating) & !is.na(winner)) %&gt;%\n  mutate(rating_diff = white_rating - black_rating)"
   },
   {
     "objectID": "iteration-project-3.html#step-2-define-the-simulation-function",
@@ -179,7 +179,7 @@
     "href": "iteration-project-3.html#step-4-plot-the-simulation-results",
     "title": "Iteration Project 3",
     "section": "Step 4: Plot the Simulation Results",
-    "text": "Step 4: Plot the Simulation Results\nWe can now plot the probabilities of each outcome as a function of the rating difference.\n\n# Plot the results\nggplot(simulation_results, aes(x = rating_diff, y = probability, color = outcome)) +\n  geom_line(size = 1.2) +\n  labs(\n    title = \"Probability of Chess Game Outcomes Based on Rating Difference\",\n    x = \"Rating Difference (White - Black)\",\n    y = \"Probability\",\n    color = \"Outcome\"\n  ) +\n  theme_minimal()\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead."
+    "text": "Step 4: Plot the Simulation Results\nWe can now plot the probabilities of each outcome as a function of the rating difference.\n\n# Plot the results\nggplot(simulation_results, aes(x = rating_diff, y = probability, color = outcome)) +\n  geom_line(linewidth = 1.2) +\n  labs(\n    title = \"Probability of Chess Game Outcomes Based on Rating Difference\",\n    x = \"Rating Difference (White - Black)\",\n    y = \"Probability\",\n    color = \"Outcome\"\n  ) +\n  theme_minimal()"
   },
   {
     "objectID": "iteration-project-3.html#step-5-insights",
