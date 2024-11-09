@@ -110,5 +110,103 @@
     "title": "Mini Project 2",
     "section": "",
     "text": "library(stringr)\n\n# 1. Count the number of headlines that contain numbers\nnytimes_data$has_numbers &lt;- str_detect(nytimes_data$Title, \"\\\\d+\")\nnum_with_numbers &lt;- sum(nytimes_data$has_numbers, na.rm = TRUE)\ncat(\"Number of headlines containing numbers:\", num_with_numbers, \"\\n\")\n\nNumber of headlines containing numbers: 409 \n\n# 2. Check for broader keywords like \"Race\" or \"Budget\"\nnytimes_data$contains_race &lt;- str_detect(nytimes_data$Title, \"Race\")\nnytimes_data$contains_budget &lt;- str_detect(nytimes_data$Title, \"Budget\")\n\n# Summarize counts\nnum_with_race &lt;- sum(nytimes_data$contains_race, na.rm = TRUE)\nnum_with_budget &lt;- sum(nytimes_data$contains_budget, na.rm = TRUE)\ncat(\"Number of headlines containing 'Race':\", num_with_race, \"\\n\")\n\nNumber of headlines containing 'Race': 36 \n\ncat(\"Number of headlines containing 'Budget':\", num_with_budget, \"\\n\")\n\nNumber of headlines containing 'Budget': 12 \n\n# 3. Search for any mention of years from 1990 to 2020\nnytimes_data$contains_year &lt;- str_detect(nytimes_data$Title, \"19[0-9]{2}|20[0-2][0-9]\")\nnum_with_year &lt;- sum(nytimes_data$contains_year, na.rm = TRUE)\ncat(\"Number of headlines containing years from 1990-2020:\", num_with_year, \"\\n\")\n\nNumber of headlines containing years from 1990-2020: 68 \n\n\n\n\n(a) Bar Plot of Word Frequency:\n\nlibrary(ggplot2)\n\n# Create a data frame for the keyword counts\nkeyword_data &lt;- data.frame(\n  Keyword = c(\"Numbers\", \"Race\", \"Budget\", \"Year (1990-2020)\"),\n  Count = c(num_with_numbers, num_with_race, num_with_budget, num_with_year)\n)\n\n# Create a bar plot\nggplot(keyword_data, aes(x = Keyword, y = Count, fill = Keyword)) +\n  geom_bar(stat = \"identity\") +\n  labs(title = \"Keyword Frequency in NY Times Headlines\",\n       x = \"Keyword\", y = \"Number of Headlines\") +\n  theme_minimal() +\n  theme(legend.position = \"none\")\n\n\n\n\n\n\n\n\nPlot Description: Plot (a) highlights the prominence of numbers and certain keywords in the headlines.\n(b) Pie Chart of Headlines Containing Numbers:\n\n# Create a data frame for the pie chart\nnumber_data &lt;- data.frame(\n  Category = c(\"Contains Numbers\", \"Doesn't Contain Numbers\"),\n  Count = c(num_with_numbers, nrow(nytimes_data) - num_with_numbers)\n)\n\n# Create the pie chart\nggplot(number_data, aes(x = \"\", y = Count, fill = Category)) +\n  geom_bar(stat = \"identity\", width = 1) +\n  coord_polar(\"y\") +\n  labs(title = \"Proportion of Headlines Containing Numbers\") +\n  theme_void() +\n  theme(legend.title = element_blank())\n\n\n\n\n\n\n\n\nPlot Description: Plot (b) highlights the prominence of numbers and certain keywords in the headlines.\n(c) Line Plot of Year Mentions (1990-2005)\n\n# Extract the mentioned years from headlines (1990-2005\nnytimes_data$mentioned_year &lt;- str_extract(nytimes_data$Title, \"19[0-9]{2}|20[0-2][0-9]\")\n\n# Convert the mentioned_year column to a factor for plotting\nnytimes_data$mentioned_year &lt;- factor(nytimes_data$mentioned_year, levels = as.character(1990:2005))\n\n# Filter out any missing or irrelevant years outside the range (1990-2005)\nfiltered_year_data &lt;- nytimes_data[!is.na(nytimes_data$mentioned_year), ]\n\n# Count the number of mentions of each year\nyear_count &lt;- table(filtered_year_data$mentioned_year)\n\n# Convert the table to a data frame for plotting\nyear_count_df &lt;- as.data.frame(year_count)\ncolnames(year_count_df) &lt;- c(\"Year\", \"Count\")\n\n# Create a line plot showing year mentions over time (1990-2005)\nggplot(year_count_df, aes(x = Year, y = Count)) +\n  geom_line(group = 1, color = \"blue\", size = 1) +\n  geom_point(color = \"red\", size = 2) +\n  labs(title = \"Mentions of Years in NY Times Headlines (1990-2005)\",\n       x = \"Year\", y = \"Number of Mentions\") +\n  theme_minimal()\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead.\n\n\n\n\n\n\n\n\n\nPlot Description: Plot (c) provides a historical view of how frequently different years were mentioned in headlines."
+  },
+  {
+    "objectID": "iteration-project-3.html",
+    "href": "iteration-project-3.html",
+    "title": "Iteration Project 3",
+    "section": "",
+    "text": "Simulate chess games between players of varying ratings to estimate the probability of different outcomes (win, lose, or draw) for the player playing White based on their rating difference with the opponent. This task is non-trivial because chess outcomes are strongly influenced by skill ratings, making the probabilities complex to estimate.\n\n\n\n\nChoose a Subset of the Data:\n\nUse the TidyTuesday Chess Games dataset to filter for games with clear player ratings and outcomes.\n\nDefine Simulation Rules:\n\nUse player ratings to probabilistically determine outcomes. For instance, a player with a higher rating has a higher chance of winning.\n\nUse a Simulation Function:\n\nDefine a function that simulates a game based on a given rating difference.\n\nRun Simulations with map():\n\nUse map() to repeat the game simulation for a range of rating differences.\n\nCreate a Plot:\n\nVisualize the estimated probability of each outcome (win, lose, or draw) for White as the rating difference changes."
+  },
+  {
+    "objectID": "iteration-project-3.html#estimating-the-probability-of-winning-a-dice-game-with-non-uniform-dice",
+    "href": "iteration-project-3.html#estimating-the-probability-of-winning-a-dice-game-with-non-uniform-dice",
+    "title": "Iteration Project 3",
+    "section": "",
+    "text": "In this scenario, we’ll estimate the probability of winning a dice game where each player has a different type of loaded die. This is a non-trivial problem because the dice have varying probabilities for each face, making the outcome difficult to calculate analytically.\n\n\n\nObjective: Estimate the probability of each player winning when using non-uniform dice.\nDetails:\n\nPlayer 1 uses a die where the probability of rolling a 6 is twice that of other faces.\nPlayer 2 uses a die where the probability of rolling a 1 or 2 is lower, and other values are equally likely.\n\nSimulation Steps:\n\nDefine a function to simulate one roll for each player with their unique probability distributions.\nUse map() to repeat the simulation multiple times.\nVisualize the probability distribution of wins.\n\nPlot and Analysis: Create a plot showing the winning probability distribution for each player and interpret the results."
+  },
+  {
+    "objectID": "iteration-project-3.html#step-1-define-the-simulation-function",
+    "href": "iteration-project-3.html#step-1-define-the-simulation-function",
+    "title": "Iteration Project 3",
+    "section": "Step 1: Define the Simulation Function",
+    "text": "Step 1: Define the Simulation Function\n\n# Load libraries\nlibrary(dplyr)\nlibrary(purrr)\nlibrary(ggplot2)\n\n# Function to simulate one roll for each player\nsimulate_dice_roll &lt;- function() {\n  # Define Player 1's die probabilities (higher chance for 6)\n  player1_probs &lt;- c(1/7, 1/7, 1/7, 1/7, 1/7, 2/7)\n  player1_roll &lt;- sample(1:6, 1, prob = player1_probs)\n  \n  # Define Player 2's die probabilities (lower chance for 1 and 2)\n  player2_probs &lt;- c(1/10, 1/10, 2/10, 2/10, 2/10, 2/10)\n  player2_roll &lt;- sample(1:6, 1, prob = player2_probs)\n  \n  # Determine winner\n  if (player1_roll &gt; player2_roll) {\n    return(\"Player 1 Wins\")\n  } else if (player2_roll &gt; player1_roll) {\n    return(\"Player 2 Wins\")\n  } else {\n    return(\"Tie\")\n  }\n}\n\n\nStep 2: Simulate the Game Multiple Times\nNow, let’s run the simulation 10,000 times to get reliable probability estimates.\n\n# Run 10,000 simulations\nset.seed(42)\nresults &lt;- map_chr(1:10000, ~ simulate_dice_roll())\n\n# Summarize results\nresults_summary &lt;- table(results) / 10000\nresults_summary_df &lt;- as.data.frame(results_summary)\ncolnames(results_summary_df) &lt;- c(\"Outcome\", \"Probability\")"
+  },
+  {
+    "objectID": "iteration-project-3.html#step-3-create-the-plot",
+    "href": "iteration-project-3.html#step-3-create-the-plot",
+    "title": "Iteration Project 3",
+    "section": "Step 3: Create the Plot",
+    "text": "Step 3: Create the Plot\nPlotting the probability distribution of outcomes to visualize who wins more frequently.\n\n# Plot the results\nggplot(results_summary_df, aes(x = Outcome, y = Probability, fill = Outcome)) +\n  geom_bar(stat = \"identity\") +\n  labs(\n    title = \"Winning Probabilities with Non-Uniform Dice\",\n    x = \"Game Outcome\",\n    y = \"Probability\"\n  ) +\n  theme_minimal()"
+  },
+  {
+    "objectID": "iteration-project-3.html#step-4-insight-and-analysis",
+    "href": "iteration-project-3.html#step-4-insight-and-analysis",
+    "title": "Iteration Project 3",
+    "section": "Step 4: Insight and Analysis",
+    "text": "Step 4: Insight and Analysis\nThis plot reveals the probability distribution of game outcomes. By simulating the loaded dice game, we can see the advantage held by Player 1 due to their increased probability of rolling a 6, even as Player 2 has a balanced but slightly disadvantaged setup. This analysis highlights how non-uniform probability distributions affect win probabilities in competitive games."
+  },
+  {
+    "objectID": "iteration-project-3.html#project-1-estimating-the-probability-of-game-outcomes-in-chess-based-on-player-ratings",
+    "href": "iteration-project-3.html#project-1-estimating-the-probability-of-game-outcomes-in-chess-based-on-player-ratings",
+    "title": "Iteration Project 3",
+    "section": "",
+    "text": "Simulate chess games between players of varying ratings to estimate the probability of different outcomes (win, lose, or draw) for the player playing White based on their rating difference with the opponent. This task is non-trivial because chess outcomes are strongly influenced by skill ratings, making the probabilities complex to estimate.\n\n\n\n\nChoose a Subset of the Data:\n\nUse the TidyTuesday Chess Games dataset to filter for games with clear player ratings and outcomes.\n\nDefine Simulation Rules:\n\nUse player ratings to probabilistically determine outcomes. For instance, a player with a higher rating has a higher chance of winning.\n\nUse a Simulation Function:\n\nDefine a function that simulates a game based on a given rating difference.\n\nRun Simulations with map():\n\nUse map() to repeat the game simulation for a range of rating differences.\n\nCreate a Plot:\n\nVisualize the estimated probability of each outcome (win, lose, or draw) for White as the rating difference changes."
+  },
+  {
+    "objectID": "iteration-project-3.html#step-1-load-and-filter-the-dataset",
+    "href": "iteration-project-3.html#step-1-load-and-filter-the-dataset",
+    "title": "Iteration Project 3",
+    "section": "Step 1: Load and Filter the Dataset",
+    "text": "Step 1: Load and Filter the Dataset\n\n# Load libraries\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\nlibrary(purrr)\nlibrary(ggplot2)\nlibrary(readr)\n\n\n\n# Read data directly from GitHub\nchess &lt;- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-10-01/chess.csv', show_col_types = FALSE)\n\n# Filter the data for games with both player ratings and results\nchess_filtered &lt;- chess %&gt;%\n  filter(!is.na(white_rating) & !is.na(black_rating) & !is.na(winner)) %&gt;%\n  mutate(rating_diff = white_rating - black_rating)"
+  },
+  {
+    "objectID": "iteration-project-3.html#step-2-define-the-simulation-function",
+    "href": "iteration-project-3.html#step-2-define-the-simulation-function",
+    "title": "Iteration Project 3",
+    "section": "Step 2: Define the Simulation Function",
+    "text": "Step 2: Define the Simulation Function\nThe function will simulate the outcome of a game based on the rating difference.\n\nsimulate_chess_game &lt;- function(rating_diff) {\n  # Define win probabilities based on rating difference\n  # Using Elo-based probabilities where larger positive rating_diff favors White\n  win_prob &lt;- 1 / (1 + 10^(-rating_diff / 400))\n  draw_prob &lt;- 0.15  # Assuming 15% of games end in a draw\n\n  # Randomly determine the outcome\n  outcome &lt;- runif(1)\n  if (outcome &lt; win_prob) {\n    return(\"White Wins\")\n  } else if (outcome &lt; win_prob + draw_prob) {\n    return(\"Draw\")\n  } else {\n    return(\"Black Wins\")\n  }\n}"
+  },
+  {
+    "objectID": "iteration-project-3.html#step-3-run-simulations-with-map",
+    "href": "iteration-project-3.html#step-3-run-simulations-with-map",
+    "title": "Iteration Project 3",
+    "section": "Step 3: Run Simulations with map()",
+    "text": "Step 3: Run Simulations with map()\nNow, we’ll simulate multiple games across a range of rating differences to capture the probability distribution.\n\n# Define rating differences to simulate\nrating_diffs &lt;- seq(-400, 400, by = 50)  # Rating differences from -400 to 400\n\n# Run simulations for each rating difference\nset.seed(42)\nsimulation_results &lt;- map_df(rating_diffs, function(diff) {\n  outcomes &lt;- map_chr(1:1000, ~ simulate_chess_game(diff))\n  outcome_summary &lt;- table(outcomes) / 1000\n  data.frame(\n    rating_diff = diff,\n    outcome = names(outcome_summary),\n    probability = as.numeric(outcome_summary)\n  )\n})"
+  },
+  {
+    "objectID": "iteration-project-3.html#step-4-plot-the-simulation-results",
+    "href": "iteration-project-3.html#step-4-plot-the-simulation-results",
+    "title": "Iteration Project 3",
+    "section": "Step 4: Plot the Simulation Results",
+    "text": "Step 4: Plot the Simulation Results\nWe can now plot the probabilities of each outcome as a function of the rating difference.\n\n# Plot the results\nggplot(simulation_results, aes(x = rating_diff, y = probability, color = outcome)) +\n  geom_line(size = 1.2) +\n  labs(\n    title = \"Probability of Chess Game Outcomes Based on Rating Difference\",\n    x = \"Rating Difference (White - Black)\",\n    y = \"Probability\",\n    color = \"Outcome\"\n  ) +\n  theme_minimal()\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead."
+  },
+  {
+    "objectID": "iteration-project-3.html#step-5-insights",
+    "href": "iteration-project-3.html#step-5-insights",
+    "title": "Iteration Project 3",
+    "section": "Step 5: Insights",
+    "text": "Step 5: Insights\nThe plot will show the probabilities of White winning, drawing, or losing as a function of the rating difference. We would expect:\n\nHigher rating differences (favoring White) to lead to a higher probability of White winning.\nClose to zero rating difference might yield more draws.\nNegative rating differences (favoring Black) should increase Black’s win probability."
+  },
+  {
+    "objectID": "iteration-project-3.html#project-2-estimating-the-probability-of-winning-a-dice-game-with-non-uniform-dice",
+    "href": "iteration-project-3.html#project-2-estimating-the-probability-of-winning-a-dice-game-with-non-uniform-dice",
+    "title": "Iteration Project 3",
+    "section": "Project 2: Estimating the Probability of Winning a Dice Game with Non-Uniform Dice",
+    "text": "Project 2: Estimating the Probability of Winning a Dice Game with Non-Uniform Dice\nIn this scenario, we’ll estimate the probability of winning a dice game where each player has a different type of loaded die. This is a non-trivial problem because the dice have varying probabilities for each face, making the outcome difficult to calculate analytically.\n\nProject Outline\n\nObjective: Estimate the probability of each player winning when using non-uniform dice.\nDetails:\n\nPlayer 1 uses a die where the probability of rolling a 6 is twice that of other faces.\nPlayer 2 uses a die where the probability of rolling a 1 or 2 is lower, and other values are equally likely.\n\nSimulation Steps:\n\nDefine a function to simulate one roll for each player with their unique probability distributions.\nUse map() to repeat the simulation multiple times.\nVisualize the probability distribution of wins.\n\nPlot and Analysis: Create a plot showing the winning probability distribution for each player and interpret the results."
+  },
+  {
+    "objectID": "iteration-project-3.html#data-source",
+    "href": "iteration-project-3.html#data-source",
+    "title": "Iteration Project 3",
+    "section": "Data Source",
+    "text": "Data Source\nThis analysis uses the Chess Game Dataset (Lichess), sourced from Lichess.org via Kaggle by Mitchell J., and curated by Havisha Khurana for the TidyTuesday project. The dataset contains over 20,000 chess games played on Lichess.org and includes information on player ratings, game outcomes, moves, and other game attributes.\nThe data can be accessed through the TidyTuesday repository on GitHub: TidyTuesday Chess Dataset (2024-10-01)."
+  },
+  {
+    "objectID": "iteration-project-3.html#data-dictionary",
+    "href": "iteration-project-3.html#data-dictionary",
+    "title": "Iteration Project 3",
+    "section": "Data Dictionary",
+    "text": "Data Dictionary\n\ngame_id: Game ID\nrated: Rated (T/F)\nstart_time: Start time\nend_time: End time\nturns: Number of turns\nvictory_status: Game status\nwinner: Winner\ntime_increment: Time increment\nwhite_id: White player ID\nwhite_rating: White player rating\nblack_id: Black player ID\nblack_rating: Black player rating\nmoves: All Moves in Standard Chess Notation\nopening_eco: Opening Eco (Standardized Code for any given opening)\nopening_name: Opening Name\nopening_ply: Number of moves in the opening phase"
   }
 ]

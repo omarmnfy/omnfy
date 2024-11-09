@@ -2,7 +2,169 @@
 title: "Iteration Project 3"
 ---
 
-## Estimating the Probability of Winning a Dice Game with Non-Uniform Dice
+## Project 1: Estimating the Probability of Game Outcomes in Chess Based on Player Ratings
+
+#### Objective
+
+Simulate chess games between players of varying ratings to estimate the probability of different outcomes (win, lose, or draw) for the player playing White based on their rating difference with the opponent. This task is non-trivial because chess outcomes are strongly influenced by skill ratings, making the probabilities complex to estimate.
+
+#### Project Steps
+
+1.  **Choose a Subset of the Data**:
+
+    -   Use the TidyTuesday Chess Games dataset to filter for games with clear player ratings and outcomes.
+
+2.  **Define Simulation Rules**:
+
+    -   Use player ratings to probabilistically determine outcomes. For instance, a player with a higher rating has a higher chance of winning.
+
+3.  **Use a Simulation Function**:
+
+    -   Define a function that simulates a game based on a given rating difference.
+
+4.  **Run Simulations with `map()`**:
+
+    -   Use `map()` to repeat the game simulation for a range of rating differences.
+
+5.  **Create a Plot**:
+
+    -   Visualize the estimated probability of each outcome (win, lose, or draw) for White as the rating difference changes.
+
+## Step 1: Load and Filter the Dataset
+
+```{r}
+# Load libraries
+library(dplyr)
+library(purrr)
+library(ggplot2)
+library(readr)
+
+
+
+# Read data directly from GitHub
+chess <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-10-01/chess.csv', show_col_types = FALSE)
+
+# Filter the data for games with both player ratings and results
+chess_filtered <- chess %>%
+  filter(!is.na(white_rating) & !is.na(black_rating) & !is.na(winner)) %>%
+  mutate(rating_diff = white_rating - black_rating)
+
+```
+
+## Step 2: Define the Simulation Function
+
+The function will simulate the outcome of a game based on the rating difference.
+
+```{r}
+simulate_chess_game <- function(rating_diff) {
+  # Define win probabilities based on rating difference
+  # Using Elo-based probabilities where larger positive rating_diff favors White
+  win_prob <- 1 / (1 + 10^(-rating_diff / 400))
+  draw_prob <- 0.15  # Assuming 15% of games end in a draw
+
+  # Randomly determine the outcome
+  outcome <- runif(1)
+  if (outcome < win_prob) {
+    return("White Wins")
+  } else if (outcome < win_prob + draw_prob) {
+    return("Draw")
+  } else {
+    return("Black Wins")
+  }
+}
+```
+
+## Step 3: Run Simulations with `map()`
+
+Now, we’ll simulate multiple games across a range of rating differences to capture the probability distribution.
+
+```{r}
+# Define rating differences to simulate
+rating_diffs <- seq(-400, 400, by = 50)  # Rating differences from -400 to 400
+
+# Run simulations for each rating difference
+set.seed(42)
+simulation_results <- map_df(rating_diffs, function(diff) {
+  outcomes <- map_chr(1:1000, ~ simulate_chess_game(diff))
+  outcome_summary <- table(outcomes) / 1000
+  data.frame(
+    rating_diff = diff,
+    outcome = names(outcome_summary),
+    probability = as.numeric(outcome_summary)
+  )
+})
+```
+
+## Step 4: Plot the Simulation Results
+
+We can now plot the probabilities of each outcome as a function of the rating difference.
+
+```{r}
+# Plot the results
+ggplot(simulation_results, aes(x = rating_diff, y = probability, color = outcome)) +
+  geom_line(size = 1.2) +
+  labs(
+    title = "Probability of Chess Game Outcomes Based on Rating Difference",
+    x = "Rating Difference (White - Black)",
+    y = "Probability",
+    color = "Outcome"
+  ) +
+  theme_minimal()
+```
+
+## Step 5: Insights
+
+The plot will show the probabilities of White winning, drawing, or losing as a function of the rating difference. We would expect:
+
+-   **Higher rating differences** (favoring White) to lead to a higher probability of White winning.
+
+-   **Close to zero rating difference** might yield more draws.
+
+-   **Negative rating differences** (favoring Black) should increase Black’s win probability.
+
+## Data Source
+
+This analysis uses the **Chess Game Dataset (Lichess)**, sourced from [Lichess.org](https://lichess.org) via [Kaggle](https://www.kaggle.com/datasets/datasnaek/chess) by Mitchell J., and curated by Havisha Khurana for the TidyTuesday project. The dataset contains over 20,000 chess games played on Lichess.org and includes information on player ratings, game outcomes, moves, and other game attributes.
+
+The data can be accessed through the TidyTuesday repository on GitHub: [TidyTuesday Chess Dataset (2024-10-01)](https://github.com/rfordatascience/tidytuesday/tree/master/data/2024/2024-10-01).
+
+## Data Dictionary
+
+-   **game_id**: Game ID
+
+-   **rated**: Rated (T/F)
+
+-   **start_time**: Start time
+
+-   **end_time**: End time
+
+-   **turns**: Number of turns
+
+-   **victory_status**: Game status
+
+-   **winner**: Winner
+
+-   **time_increment**: Time increment
+
+-   **white_id**: White player ID
+
+-   **white_rating**: White player rating
+
+-   **black_id**: Black player ID
+
+-   **black_rating**: Black player rating
+
+-   **moves**: All Moves in Standard Chess Notation
+
+-   **opening_eco**: Opening Eco (Standardized Code for any given opening)
+
+-   **opening_name**: Opening Name
+
+-   **opening_ply**: Number of moves in the opening phase
+
+------------------------------------------------------------------------
+
+## Project 2: Estimating the Probability of Winning a Dice Game with Non-Uniform Dice
 
 In this scenario, we’ll estimate the probability of winning a dice game where each player has a different type of loaded die. This is a non-trivial problem because the dice have varying probabilities for each face, making the outcome difficult to calculate analytically.
 
