@@ -13,7 +13,9 @@ website:
       - href: dataviz.qmd
         text: Data Viz
       - href: mini-project-2.qmd
-        text: Mini-Project 2        
+        text: Mini-Project 2
+      - href: iteration-project-3.qmd
+        text: Iteration Project 3
 
 output: 
   html_document:

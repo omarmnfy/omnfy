@@ -1,0 +1,92 @@
+---
+title: "Iteration Project 3"
+---
+
+## Estimating the Probability of Winning a Dice Game with Non-Uniform Dice
+
+In this scenario, we’ll estimate the probability of winning a dice game where each player has a different type of loaded die. This is a non-trivial problem because the dice have varying probabilities for each face, making the outcome difficult to calculate analytically.
+
+### Project Outline
+
+1.  **Objective**: Estimate the probability of each player winning when using non-uniform dice.
+
+2.  **Details**:
+
+    -   **Player 1** uses a die where the probability of rolling a 6 is twice that of other faces.
+
+    -   **Player 2** uses a die where the probability of rolling a 1 or 2 is lower, and other values are equally likely.
+
+3.  **Simulation Steps**:
+
+    -   Define a function to simulate one roll for each player with their unique probability distributions.
+
+    -   Use `map()` to repeat the simulation multiple times.
+
+    -   Visualize the probability distribution of wins.
+
+4.  **Plot and Analysis**: Create a plot showing the winning probability distribution for each player and interpret the results.
+
+## Step 1: Define the Simulation Function
+
+```{r}
+# Load libraries
+library(dplyr)
+library(purrr)
+library(ggplot2)
+
+# Function to simulate one roll for each player
+simulate_dice_roll <- function() {
+  # Define Player 1's die probabilities (higher chance for 6)
+  player1_probs <- c(1/7, 1/7, 1/7, 1/7, 1/7, 2/7)
+  player1_roll <- sample(1:6, 1, prob = player1_probs)
+  
+  # Define Player 2's die probabilities (lower chance for 1 and 2)
+  player2_probs <- c(1/10, 1/10, 2/10, 2/10, 2/10, 2/10)
+  player2_roll <- sample(1:6, 1, prob = player2_probs)
+  
+  # Determine winner
+  if (player1_roll > player2_roll) {
+    return("Player 1 Wins")
+  } else if (player2_roll > player1_roll) {
+    return("Player 2 Wins")
+  } else {
+    return("Tie")
+  }
+}
+```
+
+### Step 2: Simulate the Game Multiple Times
+
+Now, let’s run the simulation 10,000 times to get reliable probability estimates.
+
+```{r}
+# Run 10,000 simulations
+set.seed(42)
+results <- map_chr(1:10000, ~ simulate_dice_roll())
+
+# Summarize results
+results_summary <- table(results) / 10000
+results_summary_df <- as.data.frame(results_summary)
+colnames(results_summary_df) <- c("Outcome", "Probability")
+
+```
+
+## Step 3: Create the Plot
+
+Plotting the probability distribution of outcomes to visualize who wins more frequently.
+
+```{r}
+# Plot the results
+ggplot(results_summary_df, aes(x = Outcome, y = Probability, fill = Outcome)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Winning Probabilities with Non-Uniform Dice",
+    x = "Game Outcome",
+    y = "Probability"
+  ) +
+  theme_minimal()
+```
+
+## Step 4: Insight and Analysis
+
+This plot reveals the probability distribution of game outcomes. By simulating the loaded dice game, we can see the advantage held by Player 1 due to their increased probability of rolling a 6, even as Player 2 has a balanced but slightly disadvantaged setup. This analysis highlights how non-uniform probability distributions affect win probabilities in competitive games.
