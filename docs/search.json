@@ -158,7 +158,7 @@
     "href": "iteration-project-3.html#step-1-load-and-filter-the-dataset",
     "title": "Iteration Project 3",
     "section": "Step 1: Load and Filter the Dataset",
-    "text": "Step 1: Load and Filter the Dataset\n\n# Load libraries\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\nlibrary(purrr)\nlibrary(ggplot2)\nlibrary(readr)\nsuppressPackageStartupMessages(library(dplyr))\n\n\n\n# Read data directly from GitHub\nchess &lt;- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-10-01/chess.csv', show_col_types = FALSE)\n\n# Filter the data for games with both player ratings and results\nchess_filtered &lt;- chess %&gt;%\n  filter(!is.na(white_rating) & !is.na(black_rating) & !is.na(winner)) %&gt;%\n  mutate(rating_diff = white_rating - black_rating)"
+    "text": "Step 1: Load and Filter the Dataset\n\n# Load libraries\nlibrary(purrr)\nlibrary(ggplot2)\nlibrary(readr)\nsuppressPackageStartupMessages(library(dplyr))\n\n\n\n# Read data directly from GitHub\nchess &lt;- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-10-01/chess.csv', show_col_types = FALSE)\n\n# Filter the data for games with both player ratings and results\nchess_filtered &lt;- chess %&gt;%\n  filter(!is.na(white_rating) & !is.na(black_rating) & !is.na(winner)) %&gt;%\n  mutate(rating_diff = white_rating - black_rating)"
   },
   {
     "objectID": "iteration-project-3.html#step-2-define-the-simulation-function",
