@@ -1,0 +1,98 @@
+---
+title: "Project 5 Overview: Website Redesign and Impact"
+author: "Omar Mnfy"
+subtitle: "December 9, 2024"
+format:
+  revealjs:
+    scrollable: true
+    slide-number: true
+    show-slide-number: all
+    embed-resources: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Introduction
+
+-   **Objective:** Showcase the improvements made to the website as part of Project 5.
+-   **Focus Areas:**
+    1.  Cleaning up and organizing content.
+    2.  Enhancing data visualizations and narratives.
+    3.  Ensuring proper citations and reproducibility.
+
+------------------------------------------------------------------------
+
+## Before the Redesign
+
+-   **Challenges Identified:**
+    -   Warnings and unnecessary messages cluttering the website.
+    -   Missing context for analyses and datasets.
+    -   Inconsistent or unclear visualization labels.
+    -   Lack of proper citations and attributions.
+
+------------------------------------------------------------------------
+
+## After the Redesign
+
+-   **Improvements Made:**
+    -   Removed all warnings and messages.
+    -   Added context and narratives for each project.
+    -   Updated all visualizations with:
+        -   Proper titles and captions.
+        -   Alt text for accessibility.
+    -   Enhanced citations with detailed sources and purpose of datasets.
+
+------------------------------------------------------------------------
+
+## Data Ethics and Documentation
+
+### **Why Ethics Matter in Data Science:**
+
+-   Ensures that data is used responsibly.
+-   Protects the integrity of the analysis.
+-   Builds trust with stakeholders and audiences.
+
+### **Key Improvements Made:**
+
+1.  **Transparent Methodology:**
+    -   Documented all steps taken during the analysis to ensure clarity.
+2.  **Privacy Considerations:**
+    -   Verified that no personal or sensitive information is included in datasets.
+
+------------------------------------------------------------------------
+
+## Good vs. Bad Documentation Examples
+
+### **Bad Example:**
+
+-   Dataset referenced vaguely with no attribution.
+
+-   Visualization caption: "Ratings distribution."
+
+-   Code comments missing or unhelpful:
+
+    ```{r}
+    # Filter data.
+    ```
+
+-   No explanation of methods used for analysis.
+
+------------------------------------------------------------------------
+
+### **Good Example:**
+
+-   Detailed dataset citation:
+
+    -   "Source: TidyTuesday Lichess Dataset. Collected by R4DS community from public game archives on Lichess.org for open data exploration."
+
+-   Visualization caption:
+
+    -   "Figure 1: Distribution of player ratings for different time controls (Bullet, Blitz, Rapid) in online chess games. Data source: Lichess."
+
+-   Code comments:
+
+    ```{r}
+    # Filter data to include only games played in 2024 in dataset chess_data.
+    ```
