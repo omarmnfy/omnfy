@@ -17,7 +17,9 @@ website:
       - href: iteration-project-3.qmd
         text: Iteration Project 3
       - href: mini-project-4.qmd
-        text: SQL Project 4        
+        text: SQL Project 4
+      - href: presentation.qmd
+        text: Presentation
 
 output: 
   html_document:
