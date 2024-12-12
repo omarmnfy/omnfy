@@ -112,6 +112,10 @@ ggplot(simulation_results, aes(x = rating_diff, y = probability, color = outcome
   theme_minimal()
 ```
 
+**Alt text:**
+
+A line plot showing the probability of chess game outcomes based on the rating difference between White and Black players. The x-axis represents the rating difference (White rating minus Black rating), ranging from -400 to 400, while the y-axis represents the probability of each outcome. The blue line shows the probability of White winning, which increases as the rating difference becomes more positive. The red line shows the probability of Black winning, which decreases as the rating difference becomes more positive. The green line shows the probability of a draw, which remains relatively stable across all rating differences. A legend indicates the outcomes corresponding to each color.
+
 ## Step 5: Insights
 
 The plot will show the probabilities of White winning, drawing, or losing as a function of the rating difference. We would expect:
@@ -124,9 +128,9 @@ The plot will show the probabilities of White winning, drawing, or losing as a f
 
 ## Data Source
 
-This analysis uses the **Chess Game Dataset (Lichess)**, sourced from [Lichess.org](https://lichess.org) via [Kaggle](https://www.kaggle.com/datasets/datasnaek/chess) by Mitchell J., and curated by Havisha Khurana for the TidyTuesday project. The dataset contains over 20,000 chess games played on Lichess.org and includes information on player ratings, game outcomes, moves, and other game attributes.
+### **Citation**
 
-The data can be accessed through the TidyTuesday repository on GitHub: [TidyTuesday Chess Dataset (2024-10-01)](https://github.com/rfordatascience/tidytuesday/tree/master/data/2024/2024-10-01).
+Khurana, H., & Mitchell, J. (2024). *Chess Game Dataset (Lichess)* \[Dataset\]. Lichess.org via Kaggle. Retrieved from [TidyTuesday GitHub Repository](https://github.com/rfordatascience/tidytuesday/tree/master/data/2024/2024-10-01) and [Kaggle](https://www.kaggle.com/datasets/datasnaek/chess).
 
 ## Data Dictionary
 
@@ -248,6 +252,10 @@ ggplot(results_summary_df, aes(x = Outcome, y = Probability, fill = Outcome)) +
   ) +
   theme_minimal()
 ```
+
+**Alt Text for the Plot:**
+
+A bar plot showing the probabilities of game outcomes with non-uniform dice. The x-axis represents the game outcomes, categorized as 'Player 1 Wins,' 'Player 2 Wins,' and 'Tie.' The y-axis represents the probabilities of these outcomes. The bar for 'Player 1 Wins' is red with a height of approximately 0.4, the bar for 'Player 2 Wins' is green with a height slightly above 0.4, and the bar for 'Tie' is blue with a height around 0.2. A legend on the right associates each outcome with its corresponding color.
 
 ## Step 4: Insight and Analysis
 
