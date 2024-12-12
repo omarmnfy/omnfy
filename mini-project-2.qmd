@@ -4,13 +4,20 @@ title: "Mini Project 2"
 
 # Text Analysis of NY Times Headlines
 
-### Data Resource: **RTextTools** Package in R
+**Objective:**\
+The purpose of this mini-project is to perform a text analysis of headlines from the New York Times using the `RTextTools` package in R. We analyze various aspects of the dataset, including keyword occurrences, the presence of years, and other patterns. Finally, we visualize the insights gained from the analysis.
+
+**Data Source:**\
+The dataset comes from the `RTextTools` package in R, specifically the **NYTimes** dataset.
 
 ## Step 1: Load the Dataset & Converting it to a Tibble for Easier Manipulation
+
+We begin by loading the **NYTimes** dataset, a collection of headlines, and converting it to a tibble format for easier manipulation using the `tibble` package.
 
 ```{r loading-dataset}
 # Load the package
 library(RTextTools)
+library(ggplot2)
 
 # Load the NYTimes dataset
 data(NYTimes)
@@ -20,25 +27,27 @@ library(tibble)
 
 # Convert the NYTimes dataset to a tibble
 nytimes_data <- as_tibble(NYTimes)
-
-# Check the structure of the dataset
-str(nytimes_data)
 ```
 
 ## Step 2: Exploring the Dataset
+
+We explore the dataset to understand its structure, content, and basic statistics. This includes viewing the first few rows, examining the dataset's structure, and summarizing its columns.
 
 ```{r exploring-dataset}
 # View the first few rows of the dataset
 head(nytimes_data)
 
-# Check the structure of the dataset
-str(nytimes_data)
-
-# Get a summary of the dataset
-summary(nytimes_data)
 ```
 
 ## Step 3: Analysis Using String Functions
+
+We apply string processing techniques to analyze and transform the headlines:
+
+1.  **Counting Occurrences of a Word:** We count the number of headlines containing the word "politics."
+
+2.  **Removing Punctuation:** To clean the dataset, we remove punctuation from the headlines.
+
+3.  **Extracting the First Word:** We extract the first word from each headline for further analysis.
 
 ```{r}
 library(stringr)
@@ -57,6 +66,14 @@ head(nytimes_data$first_word)
 ```
 
 ## Step 4: Regular Expressions
+
+Using regular expressions, we search for specific patterns:
+
+1.  **Headlines Containing Numbers:** We count how many headlines include numeric values.
+
+2.  **Specific Keywords ("Race" and "Budget"):** We identify how often these terms appear in headlines.
+
+3.  **Mentioned Years (1990–2020):** We search for years mentioned in headlines from 1990 to 2020.
 
 ```{r}
 library(stringr)
@@ -86,6 +103,8 @@ cat("Number of headlines containing years from 1990-2020:", num_with_year, "\n")
 
 **(a) Bar Plot of Word Frequency**:
 
+This plot displays the frequency of specific keywords in the headlines, including numbers, "Race," "Budget," and years (1990–2020).
+
 ```{r}
 library(ggplot2)
 
@@ -104,9 +123,13 @@ ggplot(keyword_data, aes(x = Keyword, y = Count, fill = Keyword)) +
   theme(legend.position = "none")
 ```
 
-**Plot Description: Plot (a) highlights the prominence of numbers and certain keywords in the headlines.**
+**Plot (a) highlights the prominence of numbers and certain keywords in the headlines.**
+
+**Alt Text:** A bar plot showing the frequency of specific keywords in NY Times headlines. The bars represent "Numbers," "Race," "Budget," and "Year (1990–2020)," with the heights proportional to the count. The "Numbers" keyword has the highest count, while "Budget" has the lowest.
 
 **(b) Pie Chart of Headlines Containing Numbers:**
+
+This pie chart represents the proportion of headlines containing numeric values versus those that do not.
 
 ```{r}
 # Create a data frame for the pie chart
@@ -125,12 +148,16 @@ ggplot(number_data, aes(x = "", y = Count, fill = Category)) +
 
 ```
 
-**Plot Description: Plot (b) highlights the prominence of numbers and certain keywords in the headlines.**
+**Plot (b) highlights the prominence of numbers and certain keywords in the headlines.**
+
+**Alt Text:** A pie chart depicting the proportion of NY Times headlines containing numbers. One segment represents headlines with numbers (larger segment), while the other shows headlines without numbers (smaller segment).
 
 **(c) Line Plot of Year Mentions (1990-2005)**
 
+This line plot shows the frequency of mentions of specific years (1990–2005) in the headlines, providing a temporal view.
+
 ```{r}
-# Extract the mentioned years from headlines (1990-2005
+# Extract the mentioned years from headlines (1990-2005)
 nytimes_data$mentioned_year <- str_extract(nytimes_data$Title, "19[0-9]{2}|20[0-2][0-9]")
 
 # Convert the mentioned_year column to a factor for plotting
@@ -148,12 +175,20 @@ colnames(year_count_df) <- c("Year", "Count")
 
 # Create a line plot showing year mentions over time (1990-2005)
 ggplot(year_count_df, aes(x = Year, y = Count)) +
-  geom_line(group = 1, color = "blue", size = 1) +
-  geom_point(color = "red", size = 2) +
+  geom_line(group = 1, color = "blue", linewidth = 1) +
+  geom_point(color = "red", size = 2) +  # Replaced 'linewidth' with 'size'
   labs(title = "Mentions of Years in NY Times Headlines (1990-2005)",
        x = "Year", y = "Number of Mentions") +
   theme_minimal()
-
 ```
 
-**Plot Description: Plot (c) provides a historical view of how frequently different years were mentioned in headlines.**
+**Plot (c) provides a historical view of how frequently different years were mentioned in headlines.**
+
+**Alt Text:** A line plot displaying the number of NY Times headlines mentioning each year from 1990 to 2005. The x-axis represents the years, while the y-axis indicates the count. The trend shows varying mentions with peaks at certain years.
+
+### **Conclusion**
+
+This project demonstrates the power of R for textual analysis, allowing us to uncover patterns in news headlines and visualize them effectively. Each step builds on the previous one, culminating in informative plots that summarize our findings.
+
+**Citation:**\
+Dataset: `NYTimes` dataset from the `RTextTools` package in R.
