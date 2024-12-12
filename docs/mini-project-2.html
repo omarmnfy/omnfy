@@ -137,6 +137,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./mini-project-2.html" aria-current="page"> 
 <span class="menu-text">Mini-Project 2</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./iteration-project-3.html"> 
+<span class="menu-text">Iteration Project 3</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./mini-project-4.html"> 
+<span class="menu-text">SQL Project 4</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./presentation.html"> 
+<span class="menu-text">Presentation</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -173,43 +185,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="text-analysis-of-ny-times-headlines" class="level1">
 <h1>Text Analysis of NY Times Headlines</h1>
-<section id="data-resource-rtexttools-package-in-r" class="level3">
-<h3 class="anchored" data-anchor-id="data-resource-rtexttools-package-in-r">Data Resource: <strong>RTextTools</strong> Package in R</h3>
-</section>
+<p><strong>Objective:</strong><br>
+The purpose of this mini-project is to perform a text analysis of headlines from the New York Times using the <code>RTextTools</code> package in R. We analyze various aspects of the dataset, including keyword occurrences, the presence of years, and other patterns. Finally, we visualize the insights gained from the analysis.</p>
+<p><strong>Data Source:</strong><br>
+The dataset comes from the <code>RTextTools</code> package in R, specifically the <strong>NYTimes</strong> dataset.</p>
 <section id="step-1-load-the-dataset-converting-it-to-a-tibble-for-easier-manipulation" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-load-the-dataset-converting-it-to-a-tibble-for-easier-manipulation">Step 1: Load the Dataset &amp; Converting it to a Tibble for Easier Manipulation</h2>
+<p>We begin by loading the <strong>NYTimes</strong> dataset, a collection of headlines, and converting it to a tibble format for easier manipulation using the <code>tibble</code> package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the package</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RTextTools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: SparseM</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the NYTimes dataset</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(NYTimes)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the tibble package</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the NYTimes dataset to a tibble</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>nytimes_data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(NYTimes)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the structure of the dataset</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(nytimes_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>tibble [3,104 × 5] (S3: tbl_df/tbl/data.frame)
- $ Article_ID: int [1:3104] 41246 41257 41268 41279 41290 41302 41314 41333 41344 41355 ...
- $ Date      : Factor w/ 3099 levels "1-Apr-00","1-Apr-01",..: 42 1156 2268 2524 2626 2830 2934 140 236 341 ...
- $ Title     : Factor w/ 3076 levels "$58 BILLION DEAL TO UNITE 2 GIANTS OF U.S. BANKING",..: 1895 1090 1726 2797 476 2426 376 477 1361 2691 ...
- $ Subject   : Factor w/ 3036 levels "\"concierge\" medicine and its effect on the health care system",..: 938 604 445 192 169 2699 2268 2042 2081 1983 ...
- $ Topic.Code: int [1:3104] 12 20 20 19 1 19 1 1 20 15 ...</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the NYTimes dataset</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(NYTimes)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the tibble package</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the NYTimes dataset to a tibble</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>nytimes_data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(NYTimes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="step-2-exploring-the-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="step-2-exploring-the-dataset">Step 2: Exploring the Dataset</h2>
+<p>We explore the dataset to understand its structure, content, and basic statistics. This includes viewing the first few rows, examining the dataset’s structure, and summarizing its columns.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View the first few rows of the dataset</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nytimes_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View the first few rows of the dataset</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nytimes_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
   Article_ID Date     Title                                   Subject Topic.Code
@@ -221,52 +227,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 5      41290 5-Jan-96 BATTLE OVER THE BUDGET: THE OVERVIEW; … Battle…          1
 6      41302 7-Jan-96 South African Democracy Stumbles on Ol… politi…         19</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the structure of the dataset</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(nytimes_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>tibble [3,104 × 5] (S3: tbl_df/tbl/data.frame)
- $ Article_ID: int [1:3104] 41246 41257 41268 41279 41290 41302 41314 41333 41344 41355 ...
- $ Date      : Factor w/ 3099 levels "1-Apr-00","1-Apr-01",..: 42 1156 2268 2524 2626 2830 2934 140 236 341 ...
- $ Title     : Factor w/ 3076 levels "$58 BILLION DEAL TO UNITE 2 GIANTS OF U.S. BANKING",..: 1895 1090 1726 2797 476 2426 376 477 1361 2691 ...
- $ Subject   : Factor w/ 3036 levels "\"concierge\" medicine and its effect on the health care system",..: 938 604 445 192 169 2699 2268 2042 2081 1983 ...
- $ Topic.Code: int [1:3104] 12 20 20 19 1 19 1 1 20 15 ...</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get a summary of the dataset</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nytimes_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   Article_ID           Date                                        Title     
- Min.   : 5469   10-Feb-00:   2   CRISIS IN THE BALKANS: THE OVERVIEW; :   6  
- 1st Qu.:21845   18-Nov-02:   2   TESTING OF A PRESIDENT: THE OVERVIEW;:   5  
- Median :29658   24-Jan-01:   2   INTERNATIONAL BUSINESS;              :   4  
- Mean   :28855   29-Sep-99:   2   STANDOFF WITH IRAQ: THE OVERVIEW;    :   3  
- 3rd Qu.:37446   3-Jan-97 :   2   TERROR IN LITTLETON: THE OVERVIEW;   :   3  
- Max.   :45722   1-Apr-00 :   1   BASEBALL PLAYOFFS                    :   2  
-                 (Other)  :3093   (Other)                              :3081  
-                 Subject       Topic.Code   
- baseball            :  10   Min.   : 1.00  
- priest abuse scandal:   7   1st Qu.:12.00  
- Enron scandal       :   5   Median :17.00  
- olympics            :   5   Mean   :16.59  
- tennis              :   4   3rd Qu.:20.00  
- 2000 campaign       :   3   Max.   :99.00  
- (Other)             :3070                  </code></pre>
-</div>
 </div>
 </section>
 <section id="step-3-analysis-using-string-functions" class="level2">
 <h2 class="anchored" data-anchor-id="step-3-analysis-using-string-functions">Step 3: Analysis Using String Functions</h2>
+<p>We apply string processing techniques to analyze and transform the headlines:</p>
+<ol type="1">
+<li><p><strong>Counting Occurrences of a Word:</strong> We count the number of headlines containing the word “politics.”</p></li>
+<li><p><strong>Removing Punctuation:</strong> To clean the dataset, we remove punctuation from the headlines.</p></li>
+<li><p><strong>Extracting the First Word:</strong> We extract the first word from each headline for further analysis.</p></li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Count the number of headlines that contain the word "politics"</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>politics_count <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">str_detect</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"politics"</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of headlines containing 'politics':"</span>, politics_count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Count the number of headlines that contain the word "politics"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>politics_count <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">str_detect</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"politics"</span>), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of headlines containing 'politics':"</span>, politics_count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of headlines containing 'politics': 0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Remove punctuation from headlines</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>clean_headlines <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"[[:punct:]]"</span>, <span class="st">""</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nytimes_data<span class="sc">$</span>clean_headlines)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Remove punctuation from headlines</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>clean_headlines <span class="ot">&lt;-</span> <span class="fu">str_replace_all</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"[[:punct:]]"</span>, <span class="st">""</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nytimes_data<span class="sc">$</span>clean_headlines)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Nations Smaller Jails Struggle To Cope With Surge in Inmates"                    
 [2] "FEDERAL IMPASSE SADDLING STATES WITH INDECISION"                                 
@@ -275,9 +257,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [5] "BATTLE OVER THE BUDGET THE OVERVIEW LEADERS IN HOUSE DROP GOP PLAN ON US WORKERS"
 [6] "South African Democracy Stumbles on Old Rivalry"                                 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Extract the first word of each headline</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>first_word <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"</span><span class="sc">\\</span><span class="st">b</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">b"</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nytimes_data<span class="sc">$</span>first_word)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Extract the first word of each headline</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>first_word <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"</span><span class="sc">\\</span><span class="st">b</span><span class="sc">\\</span><span class="st">w+</span><span class="sc">\\</span><span class="st">b"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(nytimes_data<span class="sc">$</span>first_word)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Nation"  "FEDERAL" "Long"    "Top"     "BATTLE"  "South"  </code></pre>
 </div>
@@ -285,35 +267,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-4-regular-expressions" class="level2">
 <h2 class="anchored" data-anchor-id="step-4-regular-expressions">Step 4: Regular Expressions</h2>
+<p>Using regular expressions, we search for specific patterns:</p>
+<ol type="1">
+<li><p><strong>Headlines Containing Numbers:</strong> We count how many headlines include numeric values.</p></li>
+<li><p><strong>Specific Keywords (“Race” and “Budget”):</strong> We identify how often these terms appear in headlines.</p></li>
+<li><p><strong>Mentioned Years (1990–2020):</strong> We search for years mentioned in headlines from 1990 to 2020.</p></li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Count the number of headlines that contain numbers</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>has_numbers <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"</span><span class="sc">\\</span><span class="st">d+"</span>)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>num_with_numbers <span class="ot">&lt;-</span> <span class="fu">sum</span>(nytimes_data<span class="sc">$</span>has_numbers, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of headlines containing numbers:"</span>, num_with_numbers, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Count the number of headlines that contain numbers</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>has_numbers <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"</span><span class="sc">\\</span><span class="st">d+"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>num_with_numbers <span class="ot">&lt;-</span> <span class="fu">sum</span>(nytimes_data<span class="sc">$</span>has_numbers, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of headlines containing numbers:"</span>, num_with_numbers, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of headlines containing numbers: 409 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Check for broader keywords like "Race" or "Budget"</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>contains_race <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"Race"</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>contains_budget <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"Budget"</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize counts</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>num_with_race <span class="ot">&lt;-</span> <span class="fu">sum</span>(nytimes_data<span class="sc">$</span>contains_race, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>num_with_budget <span class="ot">&lt;-</span> <span class="fu">sum</span>(nytimes_data<span class="sc">$</span>contains_budget, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of headlines containing 'Race':"</span>, num_with_race, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Check for broader keywords like "Race" or "Budget"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>contains_race <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"Race"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>contains_budget <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"Budget"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize counts</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>num_with_race <span class="ot">&lt;-</span> <span class="fu">sum</span>(nytimes_data<span class="sc">$</span>contains_race, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>num_with_budget <span class="ot">&lt;-</span> <span class="fu">sum</span>(nytimes_data<span class="sc">$</span>contains_budget, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of headlines containing 'Race':"</span>, num_with_race, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of headlines containing 'Race': 36 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of headlines containing 'Budget':"</span>, num_with_budget, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of headlines containing 'Budget':"</span>, num_with_budget, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of headlines containing 'Budget': 12 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Search for any mention of years from 1990 to 2020</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>contains_year <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"19[0-9]{2}|20[0-2][0-9]"</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>num_with_year <span class="ot">&lt;-</span> <span class="fu">sum</span>(nytimes_data<span class="sc">$</span>contains_year, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of headlines containing years from 1990-2020:"</span>, num_with_year, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Search for any mention of years from 1990 to 2020</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>contains_year <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"19[0-9]{2}|20[0-2][0-9]"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>num_with_year <span class="ot">&lt;-</span> <span class="fu">sum</span>(nytimes_data<span class="sc">$</span>contains_year, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Number of headlines containing years from 1990-2020:"</span>, num_with_year, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Number of headlines containing years from 1990-2020: 68 </code></pre>
 </div>
@@ -321,22 +309,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="step-5-visualization" class="level3">
 <h3 class="anchored" data-anchor-id="step-5-visualization">Step 5: Visualization</h3>
 <p><strong>(a) Bar Plot of Word Frequency</strong>:</p>
+<p>This plot displays the frequency of specific keywords in the headlines, including numbers, “Race,” “Budget,” and years (1990–2020).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for the keyword counts</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>keyword_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Keyword =</span> <span class="fu">c</span>(<span class="st">"Numbers"</span>, <span class="st">"Race"</span>, <span class="st">"Budget"</span>, <span class="st">"Year (1990-2020)"</span>),</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Count =</span> <span class="fu">c</span>(num_with_numbers, num_with_race, num_with_budget, num_with_year)</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a bar plot</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(keyword_data, <span class="fu">aes</span>(<span class="at">x =</span> Keyword, <span class="at">y =</span> Count, <span class="at">fill =</span> Keyword)) <span class="sc">+</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Keyword Frequency in NY Times Headlines"</span>,</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Keyword"</span>, <span class="at">y =</span> <span class="st">"Number of Headlines"</span>) <span class="sc">+</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for the keyword counts</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>keyword_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Keyword =</span> <span class="fu">c</span>(<span class="st">"Numbers"</span>, <span class="st">"Race"</span>, <span class="st">"Budget"</span>, <span class="st">"Year (1990-2020)"</span>),</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Count =</span> <span class="fu">c</span>(num_with_numbers, num_with_race, num_with_budget, num_with_year)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a bar plot</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(keyword_data, <span class="fu">aes</span>(<span class="at">x =</span> Keyword, <span class="at">y =</span> Count, <span class="at">fill =</span> Keyword)) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Keyword Frequency in NY Times Headlines"</span>,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Keyword"</span>, <span class="at">y =</span> <span class="st">"Number of Headlines"</span>) <span class="sc">+</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -345,22 +334,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p><strong>Plot Description: Plot (a) highlights the prominence of numbers and certain keywords in the headlines.</strong></p>
+<p><strong>Plot (a) highlights the prominence of numbers and certain keywords in the headlines.</strong></p>
+<p><strong>Alt Text:</strong> A bar plot showing the frequency of specific keywords in NY Times headlines. The bars represent “Numbers,” “Race,” “Budget,” and “Year (1990–2020),” with the heights proportional to the count. The “Numbers” keyword has the highest count, while “Budget” has the lowest.</p>
 <p><strong>(b) Pie Chart of Headlines Containing Numbers:</strong></p>
+<p>This pie chart represents the proportion of headlines containing numeric values versus those that do not.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for the pie chart</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>number_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Category =</span> <span class="fu">c</span>(<span class="st">"Contains Numbers"</span>, <span class="st">"Doesn't Contain Numbers"</span>),</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Count =</span> <span class="fu">c</span>(num_with_numbers, <span class="fu">nrow</span>(nytimes_data) <span class="sc">-</span> num_with_numbers)</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the pie chart</span></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(number_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> Count, <span class="at">fill =</span> Category)) <span class="sc">+</span></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">"y"</span>) <span class="sc">+</span></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Proportion of Headlines Containing Numbers"</span>) <span class="sc">+</span></span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for the pie chart</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>number_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Category =</span> <span class="fu">c</span>(<span class="st">"Contains Numbers"</span>, <span class="st">"Doesn't Contain Numbers"</span>),</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Count =</span> <span class="fu">c</span>(num_with_numbers, <span class="fu">nrow</span>(nytimes_data) <span class="sc">-</span> num_with_numbers)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the pie chart</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(number_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> Count, <span class="at">fill =</span> Category)) <span class="sc">+</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">"y"</span>) <span class="sc">+</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Proportion of Headlines Containing Numbers"</span>) <span class="sc">+</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -369,36 +360,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p><strong>Plot Description: Plot (b) highlights the prominence of numbers and certain keywords in the headlines.</strong></p>
+<p><strong>Plot (b) highlights the prominence of numbers and certain keywords in the headlines.</strong></p>
+<p><strong>Alt Text:</strong> A pie chart depicting the proportion of NY Times headlines containing numbers. One segment represents headlines with numbers (larger segment), while the other shows headlines without numbers (smaller segment).</p>
 <p><strong>(c) Line Plot of Year Mentions (1990-2005)</strong></p>
+<p>This line plot shows the frequency of mentions of specific years (1990–2005) in the headlines, providing a temporal view.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the mentioned years from headlines (1990-2005</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>mentioned_year <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"19[0-9]{2}|20[0-2][0-9]"</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the mentioned_year column to a factor for plotting</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>mentioned_year <span class="ot">&lt;-</span> <span class="fu">factor</span>(nytimes_data<span class="sc">$</span>mentioned_year, <span class="at">levels =</span> <span class="fu">as.character</span>(<span class="dv">1990</span><span class="sc">:</span><span class="dv">2005</span>))</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter out any missing or irrelevant years outside the range (1990-2005)</span></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>filtered_year_data <span class="ot">&lt;-</span> nytimes_data[<span class="sc">!</span><span class="fu">is.na</span>(nytimes_data<span class="sc">$</span>mentioned_year), ]</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of mentions of each year</span></span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>year_count <span class="ot">&lt;-</span> <span class="fu">table</span>(filtered_year_data<span class="sc">$</span>mentioned_year)</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the table to a data frame for plotting</span></span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>year_count_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(year_count)</span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(year_count_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Count"</span>)</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a line plot showing year mentions over time (1990-2005)</span></span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(year_count_df, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Count)) <span class="sc">+</span></span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">group =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Mentions of Years in NY Times Headlines (1990-2005)"</span>,</span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Number of Mentions"</span>) <span class="sc">+</span></span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-ℹ Please use `linewidth` instead.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the mentioned years from headlines (1990-2005)</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>mentioned_year <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(nytimes_data<span class="sc">$</span>Title, <span class="st">"19[0-9]{2}|20[0-2][0-9]"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the mentioned_year column to a factor for plotting</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>nytimes_data<span class="sc">$</span>mentioned_year <span class="ot">&lt;-</span> <span class="fu">factor</span>(nytimes_data<span class="sc">$</span>mentioned_year, <span class="at">levels =</span> <span class="fu">as.character</span>(<span class="dv">1990</span><span class="sc">:</span><span class="dv">2005</span>))</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter out any missing or irrelevant years outside the range (1990-2005)</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>filtered_year_data <span class="ot">&lt;-</span> nytimes_data[<span class="sc">!</span><span class="fu">is.na</span>(nytimes_data<span class="sc">$</span>mentioned_year), ]</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of mentions of each year</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>year_count <span class="ot">&lt;-</span> <span class="fu">table</span>(filtered_year_data<span class="sc">$</span>mentioned_year)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the table to a data frame for plotting</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>year_count_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(year_count)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(year_count_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Count"</span>)</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a line plot showing year mentions over time (1990-2005)</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(year_count_df, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Count)) <span class="sc">+</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">group =</span> <span class="dv">1</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span>  <span class="co"># Replaced 'linewidth' with 'size'</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Mentions of Years in NY Times Headlines (1990-2005)"</span>,</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Number of Mentions"</span>) <span class="sc">+</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -407,7 +396,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p><strong>Plot Description: Plot (c) provides a historical view of how frequently different years were mentioned in headlines.</strong></p>
+<p><strong>Plot (c) provides a historical view of how frequently different years were mentioned in headlines.</strong></p>
+<p><strong>Alt Text:</strong> A line plot displaying the number of NY Times headlines mentioning each year from 1990 to 2005. The x-axis represents the years, while the y-axis indicates the count. The trend shows varying mentions with peaks at certain years.</p>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h3>
+<p>This project demonstrates the power of R for textual analysis, allowing us to uncover patterns in news headlines and visualize them effectively. Each step builds on the previous one, culminating in informative plots that summarize our findings.</p>
+<p><strong>Citation:</strong><br>
+Dataset: <code>NYTimes</code> dataset from the <code>RTextTools</code> package in R.</p>
 
 
 </section>
