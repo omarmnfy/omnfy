@@ -99,7 +99,7 @@ num_with_year <- sum(nytimes_data$contains_year, na.rm = TRUE)
 cat("Number of headlines containing years from 1990-2020:", num_with_year, "\n")
 ```
 
-### Step 5: Visualization
+## Step 5: Visualization
 
 **(a) Bar Plot of Word Frequency**:
 
