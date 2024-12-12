@@ -2,9 +2,29 @@
 title: "Data Viz"
 ---
 
+# **Data Visualization Project**
+
+## **Objective**
+
+This project explores data from two datasets provided by **TidyTuesday**:
+
+1.  **Chess Game Dataset (Lichess):** Analyzing the relationship between chess game duration (number of turns) and player ratings.
+
+2.  **Super Bowl Commercials Dataset:** Examining whether advertisements featuring celebrities receive more views compared to those without celebrities.
+
+## **Dataset Sources**
+
+1.  **Chess Game Dataset** ([Link](https://github.com/rfordatascience/tidytuesday/tree/master/data/2024/2024-10-01))\
+    Source: Lichess via TidyTuesday (October 1, 2024)
+
+2.  **Super Bowl Commercials Dataset** ([Link](https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-03-02))\
+    Source: TidyTuesday (March 2, 2021)
+
 ## TidyTuesday Analysis 1: Chess Game Dataset (Lichess)
 
-[**TidyTuesday Data Source**](https://github.com/rfordatascience/tidytuesday/tree/master/data/2024/2024-10-01)
+### **Objective**
+
+To analyze how the number of turns in chess games varies based on the players' average ratings.
 
 #### Code for Data Processing and Visualization
 
@@ -12,11 +32,15 @@ This section will load the data and create a scatter plot that compares the **nu
 
 ```{r}
 # Load necessary libraries
-library(tidyverse)
+suppressWarnings({
+  library(tidyverse)
+})
 library(ggplot2)
 
-# Load the chess dataset using tidytuesdayR
-tuesdata <- tidytuesdayR::tt_load('2024-10-01')
+# Load the chess dataset using tidytuesdayR and suppress messages
+suppressMessages({
+  tuesdata <- tidytuesdayR::tt_load('2024-10-01')
+})
 chess <- tuesdata$chess
 
 # Data Cleaning
@@ -35,13 +59,15 @@ ggplot(chess_clean, aes(x = average_rating, y = turns)) +
   theme_minimal()
 ```
 
-![](images/clipboard-71016751.png){fig-align="center"}
+**Alt text:** A scatter plot showing the relationship between the number of chess game turns and the average player rating. Each point represents a chess game, with the x-axis showing the average rating of the players and the y-axis showing the number of turns. Points are semi-transparent to reduce overlap, with a general spread of game durations across different player ratings.
 
-------------------------------------------------------------------------
+### 
 
 ## TidyTuesday Analysis 2: Super Bowl Commercials Dataset
 
-#### [**TidyTuesday Data Source**](https://github.com/rfordatascience/tidytuesday/tree/master/data/2021/2021-03-02)
+### **Objective**
+
+To analyze the relationship between Super Bowl commercial view counts and the presence of celebrities in the ads.
 
 #### Code for Data Processing and Visualization
 
@@ -52,8 +78,10 @@ This visualization will focus on analyzing **the relationship between Super Bowl
 library(tidyverse)
 library(ggplot2)
 
-# Load the Super Bowl dataset
-tuesdata <- tidytuesdayR::tt_load('2021-03-02')
+# Load the Super Bowl dataset and suppress messages
+suppressMessages({
+  tuesdata <- tidytuesdayR::tt_load('2021-03-02')
+})
 youtube <- tuesdata$youtube
 
 # Data Cleaning
@@ -76,4 +104,10 @@ ggplot(youtube_clean, aes(x = celebrity_presence, y = view_count, fill = celebri
 
 ```
 
-![](images/clipboard-1785774678.png)
+**Alt text:** A boxplot comparing Super Bowl commercial view counts based on celebrity presence. The x-axis categorizes ads as 'Celebrity' or 'No Celebrity,' and the y-axis represents view counts on a logarithmic scale. Ads featuring celebrities have a higher median view count compared to those without, with noticeable variability within both categories.
+
+### **Conclusion**
+
+1.  **Chess Dataset:** The scatter plot highlights how the number of turns in chess games correlates with player ratings. Games with highly-rated players tend to have different dynamics compared to lower-rated players.
+
+2.  **Super Bowl Commercials:** The boxplot reveals that ads with celebrities tend to garner more views, showcasing the influence of star power.
